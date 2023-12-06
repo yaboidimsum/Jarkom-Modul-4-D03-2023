@@ -26,7 +26,11 @@ Pada kesempatan kali ini kami akan membahas mengenai soal praktikum modul 4. Soa
     - [Routing](#routing)
     - [Testing](#testing)
 - [CIDR](#cidr)
-  - [Topologi PKT CIDR](#topologi-pkt-cidr)
+    - [Penjelasan CIDR](#penjelasan-cidr)
+    - [Topologi PKT CIDR](#topologi-pkt-cidr)
+    - [Tree CIDR](#tree-cidr)
+    - [Pembagian IP](#pembagian-ip-1)
+    - [Kendala](#kendala)
 
 ### Prefix IP
 Prefix IP yang dimiliki oleh kelompok D03 adalah `10.23.x.x`
@@ -516,3 +520,70 @@ route add -net 10.23.16.0 netmask 255.255.252.0 gw 10.23.0.130
 ```sh
 route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.23.0.129
 ```
+
+## CIDR
+
+### Penjelasan CIDR
+CIDR atau biasa dikenal Classless Inter-Domain Routing adalah suatu metode` pengalamatan dan pengelompokan alamat IP` yang memungkinkan penggunaan lebih efisien dari ruang alamat IP yang tersedia di Internet. Sebelum diperkenalkannya `CIDR`, pengalamatan IP didasarkan pada kelas-kelas, seperti `kelas A, kelas B, dan kelas C`. Setiap kelas memiliki ukuran tetap untuk jaringan dan host, yang seringkali mengakibatkan pemborosan alamat IP.
+
+CIDR menggantikan pendekatan kelas dengan memperkenalkan notasi format baru yang memungkinkan `fleksibilitas `lebih besar dalam pengelompokan dan alokasi alamat IP. Format notasi CIDR terdiri dari alamat IP dan prefiks (subnet mask) yang diwakili dalam format `bilangan biner`, seperti contoh berikut:
+```
+10.23.0.0 / 24
+```
+Dalam contoh ini, `"10.23.0.0"` adalah alamat jaringan, dan `"/24"` menunjukkan bahwa 24 bit pertama dari alamat ini digunakan sebagai netmask (subnet mask). Dengan menggunakan CIDR, administrator jaringan dapat menentukan ukuran subnet yang sesuai dengan kebutuhan tanpa terikat pada batasan kelas tradisional.
+
+Keuntungan utama CIDR melibatkan penghematan alamat IP dan pengurangan pemborosan. Dengan CIDR, tidak perlu lagi mengalokasikan blok alamat IP dengan ukuran yang tetap berdasarkan kelas. Sebagai contoh, jika suatu jaringan memerlukan 300 alamat IP, administrator dapat menggunakan CIDR untuk mengalokasikan subnet dengan panjang netmask yang sesuai tanpa harus memilih kelas yang lebih besar dari yang dibutuhkan.
+
+CIDR juga mendukung agregasi rute, yang memungkinkan penyederhanaan tabel routing di Internet. Dengan menggabungkan beberapa blok alamat IP ke dalam satu entri routing, CIDR membantu mengurangi ukuran tabel routing dan efektif meningkatkan efisiensi dalam pengelolaan lalu lintas jaringan global.
+
+### Topologi PKT CIDR
+Berikut merupakan topologi CIDR yang kami buat menggunakan Cisco Packet Tracer, dengan teknik penggabungan CIDR.
+
+![image](./img/cidr/tabel-penggabungan.png)
+
+#### Kondisi Awal (Subnet A)
+![image](./img/cidr/a-cidr.png)
+
+![image](./img/rute.png)
+
+#### Penggabungan ke-2 (Subnet B)
+![image](./img/cidr/b-cidr.png)
+
+#### Penggabungan ke-3 (Subnet C)
+![image](./img/cidr/c-cidr.png)
+
+#### Penggabungan ke-4 (Subnet D)
+![image](./img/cidr/d-cidr.png)
+
+#### Penggabungan ke-5 (Subnet E)
+![image](./img/cidr/e-cidr.png)
+
+#### Penggabungan ke-6 (Subnet F)
+![image](./img/cidr/f-cidr.png)
+
+#### Penggabungan ke-7 (Subnet G)
+![image](./img/cidr/g-cidr.png)
+
+#### Penggabungan ke-8 (Subnet H)
+![image](./img/cidr/h-cidr.png)
+
+#### Penggabungan ke-9 (Subnet I)
+![image](./img/cidr/i-cidr.png)
+
+#### Penggabungan ke-10 (Subnet J)
+![image](./img/cidr/j-cidr.png)
+
+
+
+### Tree CIDR
+Setelah dilakukannya penggabungan IP, sekarang kita melakukan pembagian IP dengan menggunakan tree pada masing-masing kelompok yang telah dibuat sebelumnya sebagai berikut
+![image](./img/cidr/tree-cidr.png)
+
+### Pembagian IP
+Berikut ini adalah output dari pembagian alamat IP yang kami dapatkan setelah melakukan subdivisi dari hasil pemecahan sebelumnya menjadi jaringan yang lebih kecil.
+
+![image](./img/cidr/table-ip-cidr.png)
+
+### Kendala
+- Kurang nya informasi terkait implementasi CIDR pada Cisco Packet Tracer, sehingga kami cukup kesulitan dalam melakukan implementasi CIDR pada Cisco Packet Tracer.
+- Terkadang terjadi kendala eror ketika mengirim packet dari satu subnet ke subnet lainnya, sehingga kami harus melakukan berulang-ulang untuk mengirimkan packet tersebut.
